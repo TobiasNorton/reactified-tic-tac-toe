@@ -11,7 +11,9 @@ class App extends Component {
   }
 
   _click = event => {
-    const index = parseInt(event.target.className)
+    console.log(event.target.dataset)
+    console.log(event.target.dataset.index)
+    const index = parseInt(event.target.dataset.index)
     this.state.board[index] = 'X'
     this.setState({
       board: this.state.board
@@ -24,23 +26,37 @@ class App extends Component {
         <h1>Tic Tac Toe</h1>
         <div className="board">
           <div className="row">
-            <div className="0" onClick={this._click}>
+            <div data-index="0" onClick={this._click}>
               {this.state.board[0]}
             </div>
-            <div className="1" onClick={this._click}>
+            <div data-index="1" onClick={this._click}>
               {this.state.board[1]}
             </div>
-            <div>{this.state.board[2]}</div>
+            <div data-index="2" onClick={this._click}>
+              {this.state.board[2]}
+            </div>
           </div>
           <div className="row">
-            <div>{this.state.board[3]}</div>
-            <div>{this.state.board[4]}</div>
-            <div>{this.state.board[5]}</div>
+            <div data-index="3" onClick={this._click}>
+              {this.state.board[3]}
+            </div>
+            <div data-index="4" onClick={this._click}>
+              {this.state.board[4]}
+            </div>
+            <div data-index="5" onClick={this._click}>
+              {this.state.board[5]}
+            </div>
           </div>
           <div className="row">
-            <div>{this.state.board[6]}</div>
-            <div>{this.state.board[7]}</div>
-            <div>{this.state.board[8]}</div>
+            <div data-index="6" onClick={this._click}>
+              {this.state.board[6]}
+            </div>
+            <div data-index="7" onClick={this._click}>
+              {this.state.board[7]}
+            </div>
+            <div data-index="8" onClick={this._click}>
+              {this.state.board[8]}
+            </div>
           </div>
         </div>
       </div>
