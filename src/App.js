@@ -43,17 +43,19 @@ class App extends Component {
       [2, 4, 6]
     ]
 
-    let isWinner = winningCombinations.some(combination => {
-      return (
+    return winningCombinations.some(
+      combination =>
         this.state.board[combination[0]] === player &&
         this.state.board[combination[1]] === player &&
         this.state.board[combination[2]] === player
-      )
-    })
-    return isWinner
+    )
   }
 
   _click = event => {
+    if (this.state.message !== 'Enjoy the Game!') {
+      return
+    }
+
     const index = parseInt(event.target.dataset.index)
 
     if (this.state.board[index] !== '') {
