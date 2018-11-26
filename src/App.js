@@ -6,34 +6,100 @@ class App extends Component {
     super(props)
 
     this.state = {
+      message: 'Enjoy the Game!',
       currentPlayer: 'X',
       board: ['', '', '', '', '', '', '', '', '']
     }
   }
 
-  _click = event => {
-    console.log(event.target.dataset)
-    console.log(event.target.dataset.index)
-    const index = parseInt(event.target.dataset.index)
-    this.state.board[index] = this.state.currentPlayer
-    let nextPlayer
-
-    if (this.state.currentPlayer === 'X') {
-      nextPlayer = 'O'
-    } else {
-      nextPlayer = 'X'
+  detectTieGame = () => {
+    if (this.detectWinner('X')) {
+      return
     }
 
-    this.setState({
-      currentPlayer: nextPlayer,
-      board: this.state.board
+    if (this.detectWinner('O')) {
+      return
+    }
+
+    const isEverySquareOccupied = this.state.board.every(square => {
+      return square !== ''
     })
+    if (isEverySquareOccupied) {
+      this.setState({
+        message: 'Tie Game!'
+      })
+    }
+  }
+
+  detectWinner = player => {
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ]
+
+    let isWinner = winningCombinations.some(combination => {
+      return (
+        this.state.board[combination[0]] === player &&
+        this.state.board[combination[1]] === player &&
+        this.state.board[combination[2]] === player
+      )
+    })
+    return isWinner
+  }
+
+  _click = event => {
+    const index = parseInt(event.target.dataset.index)
+
+    if (this.state.board[index] !== '') {
+      return
+    }
+
+    this.state.board[index] = this.state.currentPlayer
+
+    if (this.state.currentPlayer === 'X') {
+      this.setState({
+        currentPlayer: 'O'
+      })
+    } else {
+      this.setState({
+        currentPlayer: 'X'
+      })
+    }
+    console.log(`Clicked at index ${event.target.dataset.index}`)
+
+    this.setState(
+      {
+        board: this.state.board
+      },
+      () => {
+        if (this.detectWinner('X')) {
+          this.setState({
+            message: 'X Wins!'
+          })
+        }
+
+        if (this.detectWinner('O')) {
+          this.setState({
+            message: 'O Wins!'
+          })
+        }
+        this.detectTieGame()
+        //This code is called after the state is updated
+      }
+    )
   }
 
   render() {
     return (
       <div className="App">
         <h1>Tic Tac Toe</h1>
+        <h3>{this.state.message}</h3>
         <div className="board">
           <div className="row">
             <div data-index="0" onClick={this._click}>
