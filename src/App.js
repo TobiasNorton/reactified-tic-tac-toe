@@ -6,6 +6,7 @@ class App extends Component {
     super(props)
 
     this.state = {
+      currentPlayer: 'X',
       board: ['', '', '', '', '', '', '', '', '']
     }
   }
@@ -14,8 +15,17 @@ class App extends Component {
     console.log(event.target.dataset)
     console.log(event.target.dataset.index)
     const index = parseInt(event.target.dataset.index)
-    this.state.board[index] = 'X'
+    this.state.board[index] = this.state.currentPlayer
+    let nextPlayer
+
+    if (this.state.currentPlayer === 'X') {
+      nextPlayer = 'O'
+    } else {
+      nextPlayer = 'X'
+    }
+
     this.setState({
+      currentPlayer: nextPlayer,
       board: this.state.board
     })
   }
