@@ -101,7 +101,7 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Tic Tac Toe</h1>
-        <h3>{this.state.message}</h3>
+        <h2>{this.state.message}</h2>
         <div className="board">
           <div className="row">
             <div data-index="0" onClick={this._click}>
